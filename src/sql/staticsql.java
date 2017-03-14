@@ -176,6 +176,60 @@ try {
 return list;
 	
 }
-
+/**
+ * 获取精准扶贫补助费用
+ * @return
+ */
+public static List<String> getjzfpbzfy(){	
+List<String> list=new ArrayList<String>();
+Connection conn = JDBC.getConnection();	
+Statement stmt;
+String sql=" select Rtrim(id)id,Rtrim(a.zflxbm)zflxbm,Rtrim(b.zflxmc)zflxmc,Rtrim(isnull(a.bzfybm,''))bzfybm,Rtrim(isnull(c.bzfymc,''))bzfymc from jzfp_jk_bzfy a left join gyb_zflx b on a.zflxbm=b.zflxbm left join jzfp_bzfyxm c on a.bzfybm=c.bzfybm";
+try {
+	stmt = conn.createStatement();
+	ResultSet rs=stmt.executeQuery(sql);
+	//ѭ�����ÿһ����¼
+	while(rs.next())
+	{list.add(rs.getString("id"));
+	list.add(rs.getString("zflxbm"));
+	list.add(rs.getString("zflxmc"));
+	list.add(rs.getString("bzfybm"));
+	list.add(rs.getString("bzfymc"));
+}
+	stmt.close();								// �ر�����״̬����
+	conn.commit();
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+return list;
+	
+}
+/**
+ * 获取补助费用编码的编码和名称
+ * @return
+ */
+public static List<String> getjzfpbzfybm(){	
+List<String> list=new ArrayList<String>();
+Connection conn = JDBC.getConnection();	
+Statement stmt;
+String sql="select Rtrim(bzfybm)bzfybm,Rtrim(bzfymc)bzfymc from jzfp_bzfyxm";
+try {
+	stmt = conn.createStatement();
+	ResultSet rs=stmt.executeQuery(sql);
+	//ѭ�����ÿһ����¼
+	while(rs.next())
+	{list.add(rs.getString("bzfybm"));
+	list.add(rs.getString("bzfymc"));
+}
+	stmt.close();								// �ر�����״̬����
+	conn.commit();
+} catch (SQLException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+return list;
+	
+}
 
 }

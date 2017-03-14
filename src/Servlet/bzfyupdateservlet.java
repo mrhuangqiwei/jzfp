@@ -11,23 +11,24 @@ import javax.servlet.http.HttpServletResponse;
 
 import sql.Dao;
 import Bean.inserjzfpJmfyBean;
-import Bean.insertylfyBean;
+import Bean.insertbzfyBean;
+import Bean.updatebzfyBean;
 import Bean.updatejzfpjmfyBean;
-import Bean.updateylfyBean;
 
 import com.alibaba.fastjson.JSON;
 
-/**精准扶贫减免费用更新
- * Servlet implementation class jzfpjmfyuppdate
+/**
+ * 补助费用对码更新
+ * Servlet implementation class bzfyupdateservlet
  */
-@WebServlet("/jzfpjmfyuppdate")
-public class jzfpjmfyuppdate extends HttpServlet {
+@WebServlet("/bzfyupdateservlet")
+public class bzfyupdateservlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public jzfpjmfyuppdate() {
+    public bzfyupdateservlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -63,31 +64,29 @@ public class jzfpjmfyuppdate extends HttpServlet {
 
 	private boolean doupdatejson(String json) {
 		boolean ok=false;
-		List<updatejzfpjmfyBean> lBeans=JSON.parseArray(json,updatejzfpjmfyBean.class);
+		List<updatebzfyBean> lBeans=JSON.parseArray(json,updatebzfyBean.class);
 		String sql="";
 		for(int k=0;k<lBeans.size();k++){
-			String sqlString="update jzfp_jk_jmfy set fyxlbm='"+lBeans.get(k).getFyxlbm()+"',jmfybm='"+lBeans.get(k).getJmfybm()+"' where id='"+lBeans.get(k).getId()+"'";
+			String sqlString="update jzfp_jk_bzfy set zflxbm='"+lBeans.get(k).getZflxbm()+"',bzfybm='"+lBeans.get(k).getBzfybm()+"' where id='"+lBeans.get(k).getId()+"'";
 			sql=sql+sqlString+"\t";
 		}
 		Dao dao =Dao.getInstance();
 		// TODO Auto-generated method stub
 		ok=dao.update(sql);
 		return ok;
-		
 	}
 
 	private boolean doinsertjson(String json) {
 		boolean ok=false;
-		List<inserjzfpJmfyBean> lBeans=JSON.parseArray(json,inserjzfpJmfyBean.class);
+		List<insertbzfyBean> lBeans=JSON.parseArray(json,insertbzfyBean.class);
 		String sql="";
 		for(int k=0;k<lBeans.size();k++){
-			String sqlString="insert into jzfp_jk_jmfy (fyxlbm,jmfybm)values('"+lBeans.get(k).getFyxlbm()+"','"+lBeans.get(k).getJmfybm()+"')";
+			String sqlString="insert into jzfp_jk_bzfy (zflxbm,bzfybm) values('"+lBeans.get(k).getZflxbm()+"','"+lBeans.get(k).getBzfybm()+"')";
 			sql=sql+sqlString+"\t";
 		}
 	 Dao dao =Dao.getInstance();
 	 ok=dao.insert(sql);
 	 return ok;
-		
 	}
 
 	/**
