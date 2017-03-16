@@ -26,8 +26,8 @@
         <el-select v-model="value" placeholder="请选择">
             <el-option
             v-for="item in options"
-            :label="item.label"
-            :value="item.value">
+            :label="item.ylfymc"
+            :value="item.id">
             </el-option>
         </el-select>
     </div>
@@ -56,7 +56,7 @@
             }
         },
         mounted(){
-            console.log(12313131);
+
         }
     }   
 </script>
