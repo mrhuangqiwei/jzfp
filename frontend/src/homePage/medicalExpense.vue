@@ -1,26 +1,31 @@
 <style lang="scss" scoped>
-    #medicalExpense{
+    #medicalExpense {
         height: 100%;
         background: white;
-        li{
-            border-top:    1px solid #d3d3d3;
-            border-bottom: 1px solid #d3d3d3;
-            span{
-                padding-left: 50px;
-                display: inline-block;
-                box-sizing: border-box;
-                height: 36px;
-                line-height: 36px;
-            }
-            span:first-child{
-                width: 400px;
-                border-right: 1px solid #d3d3d3;
-            }
-            span:last-child{
-                width: calc(100% - 500px);
-                vertical-align: bottom;
-            }
-        }
+
+    li {
+        border-top: 1px solid #d3d3d3;
+        border-bottom: 1px solid #d3d3d3;
+
+    span {
+        padding-left: 50px;
+        display: inline-block;
+        box-sizing: border-box;
+        height: 36px;
+        line-height: 36px;
+    }
+
+    span:first-child {
+        width: 400px;
+        border-right: 1px solid #d3d3d3;
+    }
+
+    span:last-child {
+        width: calc(100% - 500px);
+        vertical-align: bottom;
+    }
+
+    }
     }
 </style>
 
@@ -28,54 +33,43 @@
     <div id='medicalExpense'>
         <ul>
             <li><span>支付类型名称</span><span>医疗费用名称</span></li>
-            <li><span>现金支付</span>
-               <span><chooseInput :options='cashPay' :getValue='cashPayValue'/></span>
+            <li v-for="zflx in payList">
+                <span v-text="zflx.zflxmc"></span>
+                <span><chooseInput :options='zflx.sub' :getValue='cashPayValue'/></span>
             </li>
-            <li><span>个帐支付</span><span></span></li>
-            <li><span>统筹支付</span><span></span></li>
-            <li><span>农合支付</span><span></span></li>
-            <li><span>项目支付</span><span></span></li>
-            <li><span>民政补助</span><span></span></li>
         </ul>
     </div>
 </template>
 
 <script>
-    var cashPayOptions = [{
-                            value: '1',
-                            label: '医疗机构减免'
-                            }, {
-                            value: '2',
-                            label: '基本医疗保险支付'
-                            }, {
-                            value: '3',
-                            label: '大病医疗保险赔付'
-                            }, {
-                            value: '4',
-                            label: '补充医疗保险赔付'
-                            },{
-                            value: '5',
-                            label: '基本医疗保险倾斜支付'
-                            },{
-                            value: '6',
-                            label: '特殊补充医疗保险赔付'
-                            }, {
-                            value: '7',
-                            label: '民政医疗赔付'
-                          }];
+    import api from '../backend/api';
     export default {
         data: function () {
             return {
-                cashPay:cashPayOptions
+                payList: []
             }
         },
-        components:{
-
+        components: {},
+        mounted() {
+            api.medicialFee().then((data) => {
+                let dirtyData = JSON.parse(data);
+                let zflxBeans = dirtyData.zflxBeans;
+                let ylfydmBeans = dirtyData.ylfydmBeans;
+                for (let i = 0; i < zflxBeans.length; i++) {
+                    zflxBeans[i].sub = [];
+                    for (let j = 0; j < ylfydmBeans.length; j++) {
+                        if(ylfydmBeans[j].zflxbm === zflxBeans[i].zflxbm) {
+                            zflxBeans[i].sub.push(ylfydmBeans[j])
+                        }
+                    }
+                }
+                this.payList = zflxBeans;
+            });
         },
-        methods:{
+        methods: {
             cashPayValue(val){
-                console.log(cashPayOptions[+val].label);
+                console.log(val);
             }
         },
-    }   
+    }
 </script>
