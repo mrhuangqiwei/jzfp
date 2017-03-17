@@ -27,7 +27,7 @@ var Store = {
      回传给我的参数是zflxbm,ylfybm
      */
     medicialFee(){
-        return _backend.api().then((data)=>{
+        return _backend.medicialFee().then((data)=>{
             return data;
         });
     }
