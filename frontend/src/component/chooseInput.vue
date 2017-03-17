@@ -26,7 +26,7 @@
         <el-select v-model="value" placeholder="请选择">
             <el-option
             v-for="item in options"
-            :label="item.ylfymc"
+            :label="item[textField]?item[textField]:' '"
             :value="item.id">
             </el-option>
         </el-select>
@@ -36,7 +36,7 @@
 <script>
 
     export default {
-        props:['options','getValue'],
+        props:['options','getValue','textField'],
         data: function () {
             return {
                 value: ''

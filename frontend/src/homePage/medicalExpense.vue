@@ -33,9 +33,9 @@
     <div id='medicalExpense'>
         <ul>
             <li><span>支付类型名称</span><span>医疗费用名称</span></li>
-            <li v-for="zflx in payList">
+            <li v-for="zflx in listData.zflxBeans">
                 <span v-text="zflx.zflxmc"></span>
-                <span><chooseInput :options='zflx.sub' :getValue='cashPayValue'/></span>
+                <span><chooseInput :options='listData.ylfyxmBeans' :getValue='cashPayValue' :textField='textField'/></span>
             </li>
         </ul>
     </div>
@@ -46,24 +46,14 @@
     export default {
         data: function () {
             return {
-                payList: []
+                listData: {},
+                textField: 'ylfyxmmc'
             }
         },
         components: {},
         mounted() {
             api.medicialFee().then((data) => {
-                let dirtyData = JSON.parse(data);
-                let zflxBeans = dirtyData.zflxBeans;
-                let ylfydmBeans = dirtyData.ylfydmBeans;
-                for (let i = 0; i < zflxBeans.length; i++) {
-                    zflxBeans[i].sub = [];
-                    for (let j = 0; j < ylfydmBeans.length; j++) {
-                        if(ylfydmBeans[j].zflxbm === zflxBeans[i].zflxbm) {
-                            zflxBeans[i].sub.push(ylfydmBeans[j])
-                        }
-                    }
-                }
-                this.payList = zflxBeans;
+                this.listData = JSON.parse(data);
             });
         },
         methods: {
