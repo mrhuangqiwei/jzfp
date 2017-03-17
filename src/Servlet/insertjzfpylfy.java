@@ -36,6 +36,7 @@ public class insertjzfpylfy extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		request.setCharacterEncoding("UTF-8");
+		response.setHeader("Access-Control-Allow-Origin", "*"); 
 		response.setCharacterEncoding("UTF-8");//服务器编码
 		response.setHeader("content-type", "text/html;charset=UTF-8");//浏览器编码
 		String json= new String(request.getParameter("json").getBytes("ISO-8859-1"),"UTF-8");
