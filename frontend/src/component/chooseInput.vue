@@ -23,7 +23,7 @@
 
 <template>
     <div>
-        <el-select v-model="value" placeholder="请选择">
+        <el-select v-model="selected" placeholder="请选择">
             <el-option
             v-for="item in options"
             :label="item[textField]?item[textField]:' '"
@@ -36,10 +36,9 @@
 <script>
 
     export default {
-        props:['options','getValue','textField'],
+        props:['options','selected','getValue','textField'],
         data: function () {
             return {
-                value: ''
             }
         },
         components:{

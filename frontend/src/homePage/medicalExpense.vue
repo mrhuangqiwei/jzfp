@@ -35,7 +35,7 @@
             <li><span>支付类型名称</span><span>医疗费用名称</span></li>
             <li v-for="zflx in listData.zflxBeans">
                 <span v-text="zflx.zflxmc"></span>
-                <span><chooseInput :options='listData.ylfyxmBeans' :getValue='cashPayValue' :textField='textField'/></span>
+                <span><chooseInput :options='listData.ylfyxmBeans' :selected='zflx.selected' :getValue='cashPayValue' :textField='textField'/></span>
             </li>
         </ul>
     </div>
@@ -54,6 +54,14 @@
         mounted() {
             api.medicialFee().then((data) => {
                 this.listData = JSON.parse(data);
+                for(let i =0;i<this.listData.zflxBeans.length;i++) {
+                    this.listData.zflxBeans[i].selected=' ';
+                    for(let j=0;j<this.listData.ylfydmBeans.length;j++) {
+                        if(this.listData.zflxBeans[i].zflxbm == this.listData.ylfydmBeans[j].zflxbm) {
+                            this.listData.zflxBeans[i].selected=this.listData.ylfydmBeans[j].ylfymc;
+                        }
+                    }
+                }
             });
         },
         methods: {

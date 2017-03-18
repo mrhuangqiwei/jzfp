@@ -35,7 +35,7 @@
             <li><span>支付类型名称</span><span>医疗费用名称</span></li>
             <li v-for="mxfybm in mxfybmBeans">
                 <span v-text="mxfybm.mc"></span>
-                <span><chooseInput :options='listData.jmfyxmbmBeans' :getValue='cashPayValue' :textField="textField"/></span>
+                <span><chooseInput :options='listData.jmfyxmbmBeans' :selected='mxfybm.selected' :getValue='cashPayValue' :textField="textField"/></span>
             </li>
         </ul>
         <button style="float: left" v-on:click="loadPage(-1)">上一页</button>
@@ -72,6 +72,14 @@
                 }
                 this.curPage += shift;
                 this.mxfybmBeans = this.listData.mxfybmBeans.slice(this.curPage * PAGE_SIZE, (this.curPage + 1)*PAGE_SIZE);
+                for(var i=0;i<this.mxfybmBeans.length;i++) {
+                    this.mxfybmBeans[i].selected = ' ';
+                    for(var j=0; j< this.listData.jmfycxBeans.length;j++) {
+                        if(this.listData.jmfycxBeans[j].fyxlbm == this.mxfybmBeans[i].bm){
+                            this.mxfybmBeans[i].selected = this.listData.jmfycxBeans[j].jmfymc;
+                        }
+                    }
+                }
             },
             cashPayValue(val){
                 console.log(val);
