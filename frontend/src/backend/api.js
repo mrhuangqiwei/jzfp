@@ -18,6 +18,14 @@ var _backend = {
             method:'GET',
             contentType:'text/plain'
         })
+    },
+
+    buzhuFee() {
+        return $.ajax({
+            url: `${BASE_URL}/jzfp/bzfycxservlet`,
+            method:'GET',
+            contentType:'text/plain'
+        })
     }
 
  };
@@ -51,6 +59,19 @@ var Store = {
      */
     jianmianFee() {
         return _backend.jianmianFee().then((data)=>{
+            return data;
+        });
+    },
+
+
+    /**
+     * 返回参数说明：
+     当bzfycxBeans不为空时左边显示zflxmc，右边显示bzfymc。当点击右边的兰时显示bzfybmBeans 中的bzcymc  通过bzfybm 关联 回传给我的参数对应后的id, zflxbm,bzfybm。
+     当bzfycxBeans 为空时，左边显示zflxBeans中的 zflxmc 右边点击显示 bzfybmBeans中的bzfymc 回传给我的参数需要对应后的 zflxbm,bzfybm
+     * @returns {*|Promise.<TResult>}
+     */
+    buzhuFee() {
+        return _backend.buzhuFee().then((data)=>{
             return data;
         });
     }

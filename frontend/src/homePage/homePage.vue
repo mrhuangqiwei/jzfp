@@ -23,7 +23,9 @@
         <el-tab-pane label="减免费用" name="second">
             <jianmianFee />
         </el-tab-pane>
-        <el-tab-pane label="补助费用" name="third">补助费用</el-tab-pane>
+        <el-tab-pane label="补助费用" name="third">
+            <buzhuFee />
+        </el-tab-pane>
     </el-tabs>
     </div>
 </template>
@@ -32,6 +34,7 @@
     import api from '../backend/api';
     import medicalExpense from './medicalExpense';
     import jianmianFee from './jianmianFee'
+    import buzhuFee from './buzhuFee'
     export default {
         data: function () {
             return {
@@ -40,7 +43,8 @@
         },
         components:{
             medicalExpense,
-            jianmianFee
+            jianmianFee,
+            buzhuFee
         },
         methods:{
           handleClick(){
