@@ -58,9 +58,8 @@
     
     export default {
         props:{
-            style:{
-                type:String,
-                default: 'clinic'
+            recStyle:{
+                type:String
             }
         },
         data: function () {
@@ -83,18 +82,17 @@
           },
 
           searchItem(){
-            console.log(1111);
             var startDate = this.$refs.inputStartDate.displayValue || '';
             var endDate   = this.$refs.inputEndDate.displayValue || '';
             var startTime = this.$refs.inputStartTime.displayValue || '';
             var endTime   = this.$refs.inputEndTime.displayValue || '';
 
-            if(this.style == 'clinic'){
-                api.recognizePoorByClinic(startDate+startTime,endDate+endTime).then((data)=>{
+            if(this.recStyle == 'clinic'){
+                api.recognizePoorByClinic((startDate+' '+startTime).trim(),(endDate+' '+endTime).trim()).then((data)=>{
                     this.tableData = JSON.parse(data);
                 })
-            } else if(this.style='hospitalized'){
-                api.recognizePoorByHospitalized(startDate+startTime,endDate+endTime).then((data)=>{
+            } else if(this.recStyle='hospitalized'){
+                api.recognizePoorByHospitalized((startDate+' '+startTime).trim(),(endDate+' '+endTime).trim()).then((data)=>{
                     this.tableData = JSON.parse(data);
                 })
             }

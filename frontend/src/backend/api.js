@@ -30,7 +30,7 @@ var _backend = {
 
     recognizePoorByClinic(startDate='',endDate=''){
         return $.ajax({
-            url: `http://182.141.186.113:8929/jzfp/jzfpmzcxservlet?kssj=2016-12-13&jssj=2016-12-14&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            url: `${BASE_URL}/jzfp/jzfpmzcxservlet?kssj=${startDate}&jssj=${endDate}&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
             method:'GET',
             contentType:'text/plain'
         })
@@ -38,7 +38,23 @@ var _backend = {
 
     recognizePoorByHospitalized(startDate='',endDate=''){
         return $.ajax({
-            url: `http://182.141.186.113:8929/jzfp/jzfpmzcxservlet?kssj=2016-12-13&jssj=2016-12-14&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            url: `${BASE_URL}/jzfp/jzfpzyxxcxservlet?kssj=${startDate}&jssj=${endDate}&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            method:'GET',
+            contentType:'text/plain'
+        })
+    },
+
+    getPoorInfoByClinic(startDate='',endDate=''){
+        return $.ajax({
+            url: `${BASE_URL}/jzfp/jzfpzypkhxx?kssj=${startDate}&jssj=${endDate}&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            method:'GET',
+            contentType:'text/plain'
+        })
+    },
+
+    getPoorInfoByHospitalized(startDate='',endDate=''){
+        return $.ajax({
+            url: `${BASE_URL}/jzfp/jzfpzypkhxx?kssj=${startDate}&jssj=${endDate}&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
             method:'GET',
             contentType:'text/plain'
         })
@@ -141,10 +157,22 @@ var Store = {
             return data;
         });
     },
-    recognizePoorByHospitalized(){
-        return _backend.recognizePoorByHospitalizeds(tartDate,endDate).then((data)=>{
+    recognizePoorByHospitalized(startDate,endDate){
+        return _backend.recognizePoorByHospitalized(startDate,endDate).then((data)=>{
             return data;
         });
+    },
+
+    getPoorInfoByClinic(startDate,endDate){
+        return _backend.getPoorInfoByClinic(startDate,endDate).then((data)=>{
+            return data;
+        })
+    },
+    
+    getPoorInfoByHospitalized(startDate,endDate){
+        return _backend.getPoorInfoByHospitalized(startDate,endDate).then((data)=>{
+            return data;
+        })
     },
     /*
         机构系统调用人口数据库系统发布的webservice接口，通

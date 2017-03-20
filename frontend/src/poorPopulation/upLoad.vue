@@ -181,9 +181,8 @@
     import api from '../backend/api';
     export default {
         props:{
-            style:{
-                type:String,
-                default: 'clinic'
+            recStyle:{
+                type:String
             }
         },
         data: function () {
@@ -199,15 +198,28 @@
             
         },
         methods:{
-          handleClick(){
+            handleClick(){
 
-          },
-          uploadSingle(){
+            },
+            uploadSingle(){
 
-          },
-          searchInfo(){
+            },
+            searchInfo(){
+                var startDate = this.$refs.inputStartDate.displayValue || '';
+                var endDate   = this.$refs.inputEndDate.displayValue || '';
+                var startTime = this.$refs.inputStartTime.displayValue || '';
+                var endTime   = this.$refs.inputEndTime.displayValue || '';
 
-          }
+                if(this.recStyle == 'clinic'){
+                    api.getPoorInfoByClinic((startDate+' '+startTime).trim(),(endDate+' '+endTime).trim()).then((data)=>{
+                        this.tableData = JSON.parse(data);
+                    })
+                } else if(this.recStyle == 'hospitalized'){
+                    api.getPoorInfoByHospitalized((startDate+' '+startTime).trim(),(endDate+' '+endTime).trim()).then((data)=>{
+                        this.tableData = JSON.parse(data);
+                    })
+                }
+            }
         }
     }   
 </script>

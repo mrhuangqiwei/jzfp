@@ -19,16 +19,16 @@
     <div id='poorPopulation'>
         <el-tabs v-model="activeTab" type="card" @tab-click="handleClick">
             <el-tab-pane label="贫困人口识别(门诊)" name="first">
-                <recognizePoor :style='clinic'/>
+                <recognizePoor :recStyle='recType'/>
             </el-tab-pane>
             <el-tab-pane label="就诊信息上传(门诊)" name="second">
-               <upLoad :style='clinic'/>
+               <upLoad :recStyle='recType'/>
             </el-tab-pane>
             <el-tab-pane label="贫困人口识别(住院)" name="third">
-                <recognizePoor :style='hospitalized'/>
+                <recognizePoor :recStyle='recType'/>
             </el-tab-pane>
              <el-tab-pane label="就诊信息上传(住院)" name="forth">
-                <upLoad :style='hospitalized'/>
+                <upLoad :recStyle='recType'/>
             </el-tab-pane>
              <el-tab-pane label="上传信息" name="fifth">
                 
@@ -46,6 +46,7 @@
         data: function () {
             return {
                activeTab: 'first',
+               recType:'clinic'
             }
         },
         components:{
@@ -53,9 +54,20 @@
             upLoad
         },
         methods:{
-          handleClick(){
-
-          }
+            handleClick(e){
+                switch(this.activeTab){
+                    case 'first':
+                    case 'second':
+                        this.recType = 'clinic';
+                        break;
+                    case 'third':
+                    case 'forth':
+                        this.recType = 'hospitalized';
+                        break;
+                    case 'fifth':
+                        break;
+                }
+            }
         },
     }   
 </script>
