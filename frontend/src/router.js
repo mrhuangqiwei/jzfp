@@ -11,11 +11,11 @@ export default [
                 children:[
                     {
                         path: '/homePage',
-                        component: resolve => require(['./homePage/homePage'],resolve),
+                        component: resolve => require(['./homePage'],resolve),
                     },
                     {
                         path:'/',
-                        component: resolve=>require(['./homePage/homePage'],resolve),   
+                        component: resolve=>require(['./homePage'],resolve),   
                     },
                     {
                         path:'*',
