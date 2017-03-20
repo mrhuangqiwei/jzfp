@@ -2,30 +2,27 @@
     #homePage{
         height: 100%;
         background: white;
-        display:flex;
-        flex-direction: column;
-        div.nav{
-            line-height: 4rem;
-            min-height: 4rem;
+ 
+        div.header{
+            line-height: 50px;
+            margin-bottom: 10px;
+            height:50px;
             span{
                 display:inline-block;
                 width: 12rem;
                 text-align: center;
                 border: 1px solid;
             }
-            span:first-child{
-                border-right:none;
-            }
         }
         div.pageContent{
-            flex:1;
+            height: calc(100% - 60px);
         }
     }
 </style>
 
 <template>
     <div id='homePage'>
-        <div class='nav'>
+        <div class='header'>
             <span @click='switchTab("checkCode")'>对码</span>
             <span @click='switchTab("poorPopulation")'>贫困人口管理</span>
         </div>

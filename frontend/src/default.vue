@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-    import homePage from './homePage/homePage';
+    import homePage from './homePage';
     export default {
          data(){
              return{

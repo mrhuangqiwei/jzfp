@@ -26,7 +26,32 @@ var _backend = {
             method:'GET',
             contentType:'text/plain'
         })
+    },
+
+    recognizePoorByClinic(startDate='',endDate=''){
+        return $.ajax({
+            url: `http://182.141.186.113:8929/jzfp/jzfpmzcxservlet?kssj=2016-12-13&jssj=2016-12-14&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            method:'GET',
+            contentType:'text/plain'
+        })
+    },
+
+    recognizePoorByHospitalized(startDate='',endDate=''){
+        return $.ajax({
+            url: `http://182.141.186.113:8929/jzfp/jzfpmzcxservlet?kssj=2016-12-13&jssj=2016-12-14&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            method:'GET',
+            contentType:'text/plain'
+        })
+    },
+
+    checkPoorMan(name,sfzh){
+        return $.ajax({
+            url: `https://171.221.252.191:8087/pkrkwebapi/GetPinkunpb?xingming=${name}&shenfenzh=${sfzh}&jigouid=510000003998`,
+            method:'GET',
+            contentType:'text/plain'
+        })
     }
+
 
  };
 
@@ -74,6 +99,62 @@ var Store = {
         return _backend.buzhuFee().then((data)=>{
             return data;
         });
+    },
+
+    /** 
+     * 贫困人口识别，门诊！！！！ 
+     提交参数 kssj ;   jssj  如：2017-03-14 08:03:16.323   2017-03-15 08:03:16.323
+       {
+        "jsjlid": "20161213000091",    结算记录id
+        "ghxh": "20161213000054",      挂号序号 
+        "jscs": "1",                   结算参数
+        "jkpzh": "20161213000002",     交款凭证号
+        "czybm": "0176",               结算操作员编码
+        "czyxm": "凌绪敏",              结算操作员姓名
+        "ywckbm": "01",                业务窗口编码
+        "brid": "20161213000019",      患者ID
+        "fyhj": 5,                     费用合计
+        "ylkzf": 0,                    医疗卡支付
+        "xjzf": 5,                     现金支付
+        "ybkzf": 0,                    医保卡支付
+        "tbje": 0,                     退补金额
+        "jsqf": 0,                     结算欠费
+        "qfbj": 0,                     欠费补缴
+        "fphm": "",                    发票号码
+        "jszt": "0",                   结算状态
+        "ryrq": "2016-12-13 09:21:59.590",                   入院日期
+        "czyks": "0022 ",              操作员科室编码
+        "bzms": "挂号结算",             备注描述
+        "bxlbbm": "",                  保险类别编码
+        "bxjsbh": "",                  保险结算编号
+        "brxm": "罗贤燕",               病人姓名
+        "brxb": "2",                   病人性别
+        "brnl": 29,                    病人年龄
+        "sfzh": "513427198711022224",  身份证号
+        "jzfpbz": " ",                 精准扶贫标志 1 是 其他否
+        "pydm": "LXY"                  拼音代码
+    }
+
+     */
+    recognizePoorByClinic(startDate,endDate){
+        return _backend.recognizePoorByClinic(startDate,endDate).then((data)=>{
+            return data;
+        });
+    },
+    recognizePoorByHospitalized(){
+        return _backend.recognizePoorByHospitalizeds(tartDate,endDate).then((data)=>{
+            return data;
+        });
+    },
+    /*
+        机构系统调用人口数据库系统发布的webservice接口，通
+        过该方法上传病人姓名、身份证号和机构ID，识别是否为贫困人口，机构ID必须上传
+        如果是，则接口返回1，否则返回0。通讯失败，返回-1。
+    */
+    checkPoorMan(name,sfzh){
+        return _backend.checkPoorMan(name,sfzh).then((data)=>{
+            return data;
+        })
     }
 };
 

@@ -1,15 +1,16 @@
-<style lang="scss" scoped>
+<style lang="scss">
     #poorPopulation{
         height: 100%;
         background: white;
+        display:flex;
+        flex-direction: column;
+
+        div.el-tab-pane,
         div.el-tabs{
             height:100%;
-            div.el-tabs__content{
-                height: calc(100% - 57px);
-            }
-            div.el-tab-pane{
-                height: 100%;
-            }
+        }
+        div.el-tabs__content{
+            height: calc(100% - 60px);
         }
     }
 </style>
@@ -18,19 +19,19 @@
     <div id='poorPopulation'>
         <el-tabs v-model="activeTab" type="card" @tab-click="handleClick">
             <el-tab-pane label="贫困人口识别(门诊)" name="first">
-                贫困人口识别
+                <recognizePoor :style='clinic'/>
             </el-tab-pane>
             <el-tab-pane label="就诊信息上传(门诊)" name="second">
-                就诊信息上传
+               <upLoad :style='clinic'/>
             </el-tab-pane>
             <el-tab-pane label="贫困人口识别(住院)" name="third">
-                贫困人口识别
+                <recognizePoor :style='hospitalized'/>
             </el-tab-pane>
              <el-tab-pane label="就诊信息上传(住院)" name="forth">
-                就诊信息上传
+                <upLoad :style='hospitalized'/>
             </el-tab-pane>
              <el-tab-pane label="上传信息" name="fifth">
-                上传信息
+                
             </el-tab-pane>
         </el-tabs>
     </div>
@@ -38,7 +39,9 @@
 
 <script>
     import api from '../backend/api';
-    
+    import recognizePoor from './recognizePoor';
+    import upLoad from './upLoad';
+
     export default {
         data: function () {
             return {
@@ -46,6 +49,8 @@
             }
         },
         components:{
+            recognizePoor,
+            upLoad
         },
         methods:{
           handleClick(){
