@@ -27,7 +27,7 @@
             <el-option
             v-for="item in options"
             :label="item[textField]?item[textField]:' '"
-            :value="item.id">
+            :value="item">
             </el-option>
         </el-select>
     </div>

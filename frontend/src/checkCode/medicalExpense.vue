@@ -38,6 +38,7 @@
                 <span><chooseInput :options='listData.ylfyxmBeans' :selected='zflx.selected' :getValue='cashPayValue' :textField='textField'/></span>
             </li>
         </ul>
+        <el-button v-on:click="uploadData" type="primary">提交记录</el-button>
     </div>
 </template>
 
@@ -67,6 +68,10 @@
         methods: {
             cashPayValue(val){
                 console.log(val);
+            },
+
+            uploadData() {
+                console.log("hell")
             }
         },
     }

@@ -38,9 +38,11 @@
                 <span><chooseInput :options='listData.jmfyxmbmBeans' :selected='mxfybm.selected' :getValue='cashPayValue' :textField="textField"/></span>
             </li>
         </ul>
-        <button style="float: left" v-on:click="loadPage(-1)">上一页</button>
-        <div style="float: left"><span v-text="curPage+1"></span>/<span v-text="totalPage"></span></div>
-        <button style="float: left" v-on:click="loadPage(1)">下一页</button>
+        <el-button-group>
+            <el-button type="primary" icon="arrow-left" v-on:click="loadPage(-1)">上一页</el-button>
+            <div style="float: left"><span v-text="curPage+1"></span>/<span v-text="totalPage"></span></div>
+            <el-button type="primary" v-on:click="loadPage(1)">下一页<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+        </el-button-group>
     </div>
 </template>
 
