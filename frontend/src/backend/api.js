@@ -46,7 +46,7 @@ var _backend = {
 
     getPoorInfoByClinic(startDate='',endDate=''){
         return $.ajax({
-            url: `${BASE_URL}/jzfp/jzfpzypkhxx?kssj=${startDate}&jssj=${endDate}&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
+            url: `${BASE_URL}/jzfp/jzfpmzpkhxx?kssj=${startDate}&jssj=${endDate}&%E6%8F%90%E4%BA%A4=%E6%8F%90%E4%BA%A4%E6%9F%A5%E8%AF%A2%E5%86%85%E5%AE%B9`,
             method:'GET',
             contentType:'text/plain'
         })
@@ -166,12 +166,16 @@ var Store = {
     getPoorInfoByClinic(startDate,endDate){
         return _backend.getPoorInfoByClinic(startDate,endDate).then((data)=>{
             return data;
+        },(err)=>{
+            console.log(err)
         })
     },
     
     getPoorInfoByHospitalized(startDate,endDate){
         return _backend.getPoorInfoByHospitalized(startDate,endDate).then((data)=>{
             return data;
+        },(err)=>{
+            console.log(err)
         })
     },
     /*

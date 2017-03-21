@@ -115,7 +115,9 @@
                 <el-table
                     :data="tableData"
                     stripe
-                    style="width: 100%">
+                    style="width: 100%"
+                    @current-change="handleCurrentChange"
+                    v-if='recStyle == "clinic"'>
                     <el-table-column prop="brid" label="患者ID"></el-table-column>
                     <el-table-column prop="brxm" label="患者姓名"></el-table-column>
                     <el-table-column prop="brxb" label="性别"></el-table-column>
@@ -130,26 +132,41 @@
                     <el-table-column prop="ybkzf" label="保险支付"></el-table-column>
                     <el-table-column prop="tbje" label="退补金额"></el-table-column>
                 </el-table>
+                 <el-table
+                    :data="tableData"
+                    stripe
+                    @current-change="handleCurrentChange"
+                    style="width: 100%"
+                    v-if='recStyle == "hospitalized"'>
+                    <el-table-column prop="brxm" label="患者姓名"></el-table-column>
+                    <el-table-column prop="brxb" label="性别"></el-table-column>
+                    <el-table-column prop="brnl" label="年龄"></el-table-column>
+                    <el-table-column prop="sfzh" label="身份证号"></el-table-column>
+                    <el-table-column prop="fyhj" label="费用合计"></el-table-column>
+                    <el-table-column prop="ksmc" label="科室名称"></el-table-column>
+                    <el-table-column prop="ryks" label="科室编码"></el-table-column>
+                    <el-table-column prop="ryzdbm" label="入院诊断名称"></el-table-column>
+                </el-table>
             </div>
         </div>
         <div class='right'>
             <div class='basicInfo'>
                 <ul>
                     <p>基本信息</p>
-                    <li><div><span>交易ID：</span><span><input /></span></div><div><span>姓名：</span><span><input /></span></div></li>
-                    <li><div><span>身份证号：</span><span><input /></span></div><div><span>门诊住院标志：</span><span><input /></span></div></li>
-                    <li><div><span>就诊日起：</span><span><input /></span></div><div><span>住院号：</span><span><input /></span></div></li>
-                    <li><div><span>出院日期：</span><span><input /></span></div><div><span>就诊机构代码：</span><span><input /></span></div></li>
-                    <li><div><span>主要诊断编码：</span><span><input /></span></div><div><span>主要诊断名称：</span><span><input /></span></div></li>
+                    <li><div><span>交易ID：</span><span><input :value='currentRow&&currentRow.jsjlid' /></span></div><div><span>姓名：</span><span><input :value='currentRow&&currentRow.brxm' /></span></div></li>
+                    <li><div><span>身份证号：</span><span><input :value='currentRow&&currentRow.sfzh' /></span></div><div><span>门诊住院标志：</span><span><input /></span></div></li>
+                    <li><div><span>就诊日起：</span><span><input :value='currentRow&&currentRow.ryrq' /></span></div><div><span>住院号：</span><span><input :value='currentRow&&currentRow.zyh' /></span></div></li>
+                    <li><div><span>出院日期：</span><span><input :value='currentRow&&currentRow.cyrq'/></span></div><div><span>就诊机构代码：</span><span><input defaultValue='510000003988'/></span></div></li>
+                    <li><div><span>主要诊断编码：</span><span><input :value='currentRow&&currentRow.ruzdbm' /></span></div><div><span>主要诊断名称：</span><span><input :value='currentRow&&currentRow.ryzdmc' /></span></div></li>
                     <li><div><span>次要诊断：</span><span><input /></span></div><div><span>次要诊断名称：</span><span><input /></span></div></li>
                 </ul>
             </div>
             <div class='twoProtect'>
                 <ul>
                     <p>两保三救助三基金</p>
-                    <li><div><span>总金额：</span><span><input /></span></div><div><span>自费金额：</span><span><input /></span></div></li>
-                    <li><div><span>报销补助金额：</span><span><input /></span></div><div><span>医疗机构减免：</span><span><input /></span></div></li>
-                    <li><div><span>基本医疗保险支付：</span><span><input /></span></div><div><span>大病医疗保险：</span><span><input /></span></div></li>
+                    <li><div><span>总金额：</span><span><input :value='currentRow&&currentRow.fyhj' /></span></div><div><span>自费金额：</span><span><input /></span></div></li>
+                    <li><div><span>报销补助金额：</span><span><input :value='currentRow&&currentRow.fyhj'/></span></div><div><span>医疗机构减免：</span><span><input /></span></div></li>
+                    <li><div><span>基本医疗保险支付：</span><span><input :value='currentRow&&currentRow.ylkzf' /></span></div><div><span>大病医疗保险：</span><span><input /></span></div></li>
                     <li><div><span>重大疾病扶贫基金：</span><span><input /></span></div><div><span>住院费用全报销救助：</span><span><input /></span></div></li>
                     <li><div><span>疾病应急救助：</span><span><input /></span></div><div><span>民政医疗救助：</span><span><input /></span></div></li>
                     <li><div><span>卫生扶贫基金：</span><span><input /></span></div><div><span>医药爱心基金：</span><span><input /></span></div></li>
@@ -191,7 +208,8 @@
                 endDate:'',
                 startTime:'',
                 endTime:'',
-                tableData:[]
+                tableData:[],
+                currentRow: {}
             }
         },
         components:{
@@ -199,10 +217,14 @@
         },
         methods:{
             handleClick(){
-
+                console.log(111111);
+            },
+            handleCurrentChange(val){
+                this.currentRow = val;
+                console.log(val);
             },
             uploadSingle(){
-
+                console.log(this.currentRow);
             },
             searchInfo(){
                 var startDate = this.$refs.inputStartDate.displayValue || '';
@@ -220,6 +242,9 @@
                     })
                 }
             }
+        },
+        mounted(){
+            this.searchInfo();
         }
     }   
 </script>
